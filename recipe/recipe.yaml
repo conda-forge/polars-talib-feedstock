@@ -13,7 +13,7 @@ source:
   sha256: 7e2b11f9aa8c4875035b87eec92c762323466b0bb9d702deffc3f4109359c48b
 
 build:
-  number: 0
+  number: 1
   script:
     - if: unix
       then: export LIBCLANG_PATH=$PREFIX/lib
@@ -64,8 +64,7 @@ tests:
   - script:
       - if: win
         then: abi3audit %PREFIX%/Lib/site-packages/polars_talib/_polars_talib.pyd -s -v --assume-minimum-abi3 ${{ python_min }}
-      - if: not win
-        then:
+        else:
           - export SP_DIR=$(python -c "import site; print(site.getsitepackages()[0])")
           - abi3audit $SP_DIR/polars_talib/_polars_talib.abi3.so -s -v --assume-minimum-abi3 ${{ python_min }}
     requirements:
